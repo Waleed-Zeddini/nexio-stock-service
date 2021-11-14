@@ -1,0 +1,81 @@
+info:
+    app:
+        desc: Stock Service API
+        name: stock-service
+        contact:
+           name: Walid ZEDDINI
+           email: walid.zeddini@gmail.com
+           website: https://www.zeddini.com/
+        license: ZPL - ZED GPL GNU  1.2
+        license-url: 'https://www.zeddini.com/ZPL-LICENSE-1-2'
+        version: 1.0.1
+            
+spring:
+  application:
+    name: stock-service
+  zipkin:
+    base-url: http://localhost:9411/
+# Security configuration
+#  security:
+#    user:
+#      name: zeddini
+#      password: zeddini
+  # Database
+  datasource: 
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: ':::::::::::: Hikari DS NEXIO INVENTARY-MS POOL ::::::::::::'
+      connection-timeout: 60000
+      maximum-pool-size: 30
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/INVENTARY_MS_DB
+    username: zedgres
+    password: zedgres
+  # JPA properties spring.jpa.hibernate.ddl-auto=update
+  jpa:
+    hibernate:
+      ddl-auto: update # When you launch the application for the first time - switch "none" at "create"
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+    show-sql : false
+    properties:
+      hibernate:
+        format_sql: true
+        
+# Logger configuration  
+logging:
+  pattern:
+     console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+     file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    org.hibernate: ERROR
+   
+#  Server configuration
+server:
+  port: 9191 
+eureka:
+  instance:
+    hostname: localhost
+    serviceUrl:
+      defaultZone : http://${eureka.instance.hostname}:8761/eureka/  
+# CF UAA setting  
+#uaa:
+#  url: ${UAA_URI:http://localhost:8080/uaa}
+#  # Client ID on whose behalf the access_token will be verified by Resource Server
+#  clientId: uaa-ui-client
+#  clientSecret: secret
+# Keycloak setting
+
+keycloak:
+#  auth-server-url: ${UAA_URI:http://192.168.2.177:8080/auth/}
+  auth-server-url: http://key-cloak.ddns.net:8080/auth/
+  realm: nexio-api-rest-space
+  resource : stock
+  public-client : false
+  bearer-only : true
+  credentials : 
+    secret : 6de31c9b-3acb-4ae0-a3d5-639bc72c5d29
+    use-resource-role-mappings : true  
