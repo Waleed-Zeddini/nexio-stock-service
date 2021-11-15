@@ -17,6 +17,7 @@ import com.nexio.api.ms.domain.Produit;
 import com.nexio.api.ms.service.IProduitService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
 
 import org.slf4j.Logger;
@@ -78,7 +79,7 @@ public class ProduitResource {
                 .body(result);
         }
     
-    @PostMapping("/produits/many")
+    @GetMapping("/produits/save/many")
     public ResponseEntity<Void> createManyProduit(@Valid @RequestBody List<Produit> produit) throws URISyntaxException {
         log.debug("REST request to save many Produit : {}");
  
@@ -87,6 +88,12 @@ public class ProduitResource {
         return ResponseEntity.noContent().build();
         }
 
+    @GetMapping("/produits/all")
+    @ApiOperation(value = "Get all Produits in the Stock - list")
+    public  List<Produit> getAllProduits() {
+        log.debug("REST request to get all Produits in the Stock");
+        return produitService.findAll();
+    }
     /**
      * {@code PUT  /produits} : Updates an existing produit.
      *

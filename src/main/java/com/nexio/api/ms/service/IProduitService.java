@@ -28,6 +28,8 @@ public interface IProduitService {
 	 
 	Page<Produit> findAll(Pageable pageable);
 	
+	List<Produit> findAll();
+	
 	Optional<Produit> findOne(Long id);
 	
 	void delete(Long id);

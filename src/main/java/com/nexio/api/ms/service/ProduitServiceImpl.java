@@ -12,6 +12,7 @@ package com.nexio.api.ms.service;
  * @since   2021-11-07 
  */
 import com.nexio.api.ms.domain.Produit;
+import com.nexio.api.ms.repository.CategorieRepository;
 import com.nexio.api.ms.repository.ProduitRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +35,12 @@ public class ProduitServiceImpl implements IProduitService {
     private final Logger log = LoggerFactory.getLogger(ProduitServiceImpl.class);
 
     private final ProduitRepository produitRepository;
+    private final CategorieRepository categorieRepository;
 
-    public ProduitServiceImpl(ProduitRepository produitRepository) {
+
+    public ProduitServiceImpl(ProduitRepository produitRepository, CategorieRepository categorieRepository) {
         this.produitRepository = produitRepository;
+        this.categorieRepository = categorieRepository;
     }
 
     /**
@@ -91,5 +95,18 @@ public class ProduitServiceImpl implements IProduitService {
 			save(produit);
 		}
 		
+	}
+
+	@Override
+	public List<Produit> findAll() {
+		  List<Produit> produits = produitRepository.findAll();
+	        
+       	
+			for (Produit produit : produits) {
+				if (produit != null) {
+					produit.setCategorie(categorieRepository.getById(produit.getCategorieId()));
+				}
+			}
+	         return produits;
 	}
 }
