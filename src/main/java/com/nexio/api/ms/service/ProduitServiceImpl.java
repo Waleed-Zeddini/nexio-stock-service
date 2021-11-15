@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,11 +91,13 @@ public class ProduitServiceImpl implements IProduitService {
     }
 
 	@Override
-	public void saveMany(List<Produit> produitList) {
+	public List<Produit> saveMany(List<Produit> produitList) {
+		List<Produit> result = new ArrayList<Produit>();
 		for (Produit produit : produitList) {
-			save(produit);
+			produit = save(produit);
+			result.add(produit);
 		}
-		
+		return result;
 	}
 
 	@Override

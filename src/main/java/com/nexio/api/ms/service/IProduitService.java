@@ -14,6 +14,8 @@ package com.nexio.api.ms.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -34,7 +36,7 @@ public interface IProduitService {
 	
 	void delete(Long id);
 	
-	void saveMany(List<Produit> produit);
+	List<Produit> saveMany(List<Produit> produit);
 
    
 }
