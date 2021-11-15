@@ -80,7 +80,7 @@ public class ProduitResource {
         }
     
     @PostMapping("/produits/save/many")
-    public List<Produit> createManyProduit(List<Produit> produit) throws URISyntaxException {
+    public List<Produit> createManyProduit( @RequestBody List<Produit> produit) throws URISyntaxException {
         log.debug("REST request to save many Produit : {}");
  
         produit = produitService.saveMany(produit);
