@@ -79,3 +79,15 @@ keycloak:
   credentials : 
     secret : 6de31c9b-3acb-4ae0-a3d5-639bc72c5d29
     use-resource-role-mappings : true  
+    
+#keycloak:
+#  enabled: true
+#  auth-server-url: http://key-cloak.ddns.net:8080/auth/
+#  credentials:
+#    secret: 14da6f9e-261f-489a-9bf0-1441e4a9ddc4
+#  realm: baeldung-soap-services
+#  bearer-only: true
+#  use-resource-role-mappings: 'true'
+##  ssl-required: external
+#  resource: baeldung-soap-services    
+    

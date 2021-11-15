@@ -60,6 +60,8 @@ public List<Produit> findByCaracteristiquesLike( String caracteristique);
  * Finders
  */
 
+public List<Produit>  findByCategorieId(Long categorieId);
+
 public List<Produit>  findByQuantiteGreaterThan(Long qte);
 public List<Produit>  findByQuantiteLessThan(Long qte);
 

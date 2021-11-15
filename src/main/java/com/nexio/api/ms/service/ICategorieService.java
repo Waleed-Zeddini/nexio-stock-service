@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.nexio.api.ms.domain.Categorie;
+import com.nexio.api.ms.domain.Produit;
 /**
  * Interface for managing methods linked to {@link Categorie}.
  */
@@ -31,6 +32,9 @@ public interface ICategorieService {
 	Optional<Categorie> findOne(Long id);
 	
 	void delete(Long id);
+	
+	List<Produit>  getByCategorieId(Long categorieId);
+
 
    
 }

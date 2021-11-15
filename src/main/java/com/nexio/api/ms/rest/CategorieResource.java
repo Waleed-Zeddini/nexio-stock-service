@@ -16,6 +16,7 @@ package com.nexio.api.ms.rest;
 import com.nexio.api.ms.domain.Categorie;
 import com.nexio.api.ms.service.ICategorieService;
 
+import io.swagger.annotations.Api;
 import springfox.documentation.annotations.ApiIgnore;
 
 import org.slf4j.Logger;
@@ -48,8 +49,8 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:4200")
-//@Api(value="Categorie management",tags="Categorie")
-@ApiIgnore
+@Api(value="Categorie",tags="Catégorie")
+//@ApiIgnore
 public class CategorieResource {
 
     private final Logger log = LoggerFactory.getLogger(CategorieResource.class);

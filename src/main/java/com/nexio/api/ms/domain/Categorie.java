@@ -24,6 +24,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.annotations.ApiModel;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,6 +42,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@ApiModel(value="Categorie",description="Catégorie de produit")
+
 public class Categorie implements Serializable {
 
 	 private static final long serialVersionUID = 1L;

@@ -12,7 +12,6 @@ package com.nexio.api.ms.service;
  * @since   2021-11-05 
  */
 
-import com.google.common.collect.Lists;
 import com.nexio.api.ms.domain.Categorie;
 import com.nexio.api.ms.domain.Produit;
 import com.nexio.api.ms.repository.CategorieRepository;
@@ -95,17 +94,20 @@ public class CategorieServiceImpl implements ICategorieService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
-        log.debug("Request to delete Categorie : {}", id);
-        
-        
-        List<Produit> produitList = List.copyOf(categorieRepository.findById(id).get().getProduits());
-	   
-        for (Produit produit : produitList) {
-	           produitRepository.delete(produit);
-	
+	public void delete(Long id) {
+		log.debug("Request to delete Categorie : {}", id);
+
+		List<Produit> produitList = getByCategorieId(id);
+
+		for (Produit produit : produitList) {
+			produitRepository.deleteById(produit.getId());
 		}
 
-        categorieRepository.deleteById(id);
-    }
+		categorieRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Produit> getByCategorieId(Long categorieId) {
+		return produitRepository.findByCategorieId(categorieId);
+	}
 }

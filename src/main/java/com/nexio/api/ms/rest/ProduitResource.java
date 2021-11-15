@@ -16,6 +16,7 @@ package com.nexio.api.ms.rest;
 import com.nexio.api.ms.domain.Produit;
 import com.nexio.api.ms.service.IProduitService;
 
+import io.swagger.annotations.Api;
 import springfox.documentation.annotations.ApiIgnore;
 
 import org.slf4j.Logger;
@@ -49,8 +50,8 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:4200")
-//@Api(value="Produit management",tags="Produit")
-@ApiIgnore
+@Api(value="Produit",tags="Produit")
+//@ApiIgnore
 public class ProduitResource {
 
     private final Logger log = LoggerFactory.getLogger(ProduitResource.class);
