@@ -35,6 +35,8 @@ public interface ICategorieService {
 	
 	List<Produit>  getByCategorieId(Long categorieId);
 
+	List<Categorie> findAll();
+
 
    
 }

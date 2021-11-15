@@ -110,4 +110,9 @@ public class CategorieServiceImpl implements ICategorieService {
 	public List<Produit> getByCategorieId(Long categorieId) {
 		return produitRepository.findByCategorieId(categorieId);
 	}
+
+	@Override
+	public List<Categorie> findAll() {
+		return categorieRepository.findAll();
+	}
 }
