@@ -80,12 +80,12 @@ public class ProduitResource {
         }
     
     @GetMapping("/produits/save/many")
-    public ResponseEntity<Void> createManyProduit(@Valid @RequestBody List<Produit> produit) throws URISyntaxException {
+    public List<Produit> createManyProduit(@Valid @RequestBody List<Produit> produit) throws URISyntaxException {
         log.debug("REST request to save many Produit : {}");
  
-         produitService.saveMany(produit);
+        produit = produitService.saveMany(produit);
         
-        return ResponseEntity.noContent().build();
+        return produit;
         }
 
     @GetMapping("/produits/all")
