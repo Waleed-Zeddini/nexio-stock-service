@@ -77,6 +77,15 @@ public class ProduitResource {
         return ResponseEntity.created(new URI("/api/produits/" + result.getId()))
                 .body(result);
         }
+    
+    @PostMapping("/produits/many")
+    public ResponseEntity<Void> createManyProduit(@Valid @RequestBody List<Produit> produit) throws URISyntaxException {
+        log.debug("REST request to save many Produit : {}");
+ 
+         produitService.saveMany(produit);
+        
+        return ResponseEntity.noContent().build();
+        }
 
     /**
      * {@code PUT  /produits} : Updates an existing produit.

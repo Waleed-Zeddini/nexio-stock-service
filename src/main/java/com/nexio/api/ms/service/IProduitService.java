@@ -31,6 +31,8 @@ public interface IProduitService {
 	Optional<Produit> findOne(Long id);
 	
 	void delete(Long id);
+	
+	void saveMany(List<Produit> produit);
 
    
 }
