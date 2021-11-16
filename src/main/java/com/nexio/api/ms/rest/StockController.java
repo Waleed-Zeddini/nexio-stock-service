@@ -50,7 +50,7 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:4200")
-@Api(value="Microservice - Stock",tags="The main Microservice")
+@Api(value="The main Microservice",tags="Microservice - Stock")
 public class StockController {
 
     private final Logger log = LoggerFactory.getLogger(StockController.class);
