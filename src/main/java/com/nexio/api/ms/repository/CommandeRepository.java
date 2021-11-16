@@ -12,6 +12,8 @@ package com.nexio.api.ms.repository;
  * @since   2021-11-05 
  */
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -20,14 +22,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.nexio.api.ms.domain.Categorie;
+import com.nexio.api.ms.domain.Commande;
+import com.nexio.api.ms.domain.LigneCommande;
 
 /**
- * Spring Data  repository for the Categorie entity.
+ * Spring Data  repository for the Commande entity.
  */
 @Repository
-public interface CategorieRepository extends JpaRepository<Categorie, Long> {
-
+public interface CommandeRepository extends JpaRepository<Commande, Long> {
 	/**
 	 * 
 	 * NOTA:  
@@ -36,13 +38,21 @@ public interface CategorieRepository extends JpaRepository<Categorie, Long> {
 		* However, we can overload them as we wish (if needed)
 		* Query, Query Native
 	 */
-		
+	
 /**
  * Queries (Methods) relating to the main Business Rules (search)
  */
-public Page<Categorie> findByCode(String code, Pageable pageable);
+	
 
-public Page<Categorie> findByLibelle(String libelle, Pageable pageable);
+public List<Commande> findByDateBetween(LocalDate dateDebut, LocalDate dateFin);
+
+public List<Commande> findByEtatAndDateBetween(Long etatCommande,LocalDate dateDebut, LocalDate dateFin);
+
+public List<Commande> findByPrixTotalAndDateBetween(BigDecimal prixTotal, LocalDate dateDebut, LocalDate dateFin);
+
+public List<Commande>  findByPrixTotalLessThan(BigDecimal prixTotal);
+
+public List<Commande>  findByPrixTotalGreaterThan(BigDecimal prixTotal);
 
 
 
@@ -50,20 +60,23 @@ public Page<Categorie> findByLibelle(String libelle, Pageable pageable);
 /**
  * Finders
  */
-public List<Categorie>  findByCodeLike(String code);
-public List<Categorie>  findByLibelleLike(String libelle);
- 
+
+public List<Commande>  findByPrixTotal(BigDecimal prixTotal);
+public List<Commande>  findByDate(LocalDate dateCommande);
+public List<Commande>  findByEtat(Long etatCommande);
 
 /**
  * Just an example in case we want to appeal
   * to the query (which is not recommended for Spring Data performace)
  */
 @Query(
-		  " SELECT  c FROM Categorie c "
-		    + " WHERE  c.code = ?1 "
-		    + " OR  c.libelle Like ?2% "
+		  " SELECT  c FROM Commande c "
+		    + " WHERE  c.etat = ?1 "
+		    + " AND  c.prixTotal > ?2 "
+		    + " AND  c.date < ?3 "
 )	
-public List<Categorie> findCatgorieByCodeOrLib(String code, String libelle);
+public List<Commande> findByEtatCdeAndPrixTotDateInf(Long etatCommande, BigDecimal prixTotal, LocalDate dateCommande);
+
 
 
 

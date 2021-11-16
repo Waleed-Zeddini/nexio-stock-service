@@ -17,26 +17,27 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.nexio.api.ms.domain.Categorie;
+import com.nexio.api.ms.domain.LigneCommande;
 import com.nexio.api.ms.domain.Produit;
 /**
- * Interface for managing methods linked to {@link Categorie}.
+ * Interface for managing methods linked to {@link LigneCommande}.
  */
-public interface ICategorieService {
+public interface ILigneCommandeService {
 
 	
-	Categorie save(Categorie produit);
+	LigneCommande save(LigneCommande produit);
 	 
-	Page<Categorie> findAll(Pageable pageable);
+	Page<LigneCommande> findAll(Pageable pageable);
 	
-	Optional<Categorie> findOne(Long id);
+	List<LigneCommande> findAll();
+	
+	Optional<LigneCommande> findOne(Long id);
 	
 	void delete(Long id);
 	
-	List<Produit>  getByCategorieId(Long categorieId);
+	List<Produit> getProduits();
 
-	List<Categorie> findAll();
-
+	Produit getProduitById(Long id);
 
    
 }

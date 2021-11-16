@@ -20,16 +20,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.nexio.api.ms.domain.Produit;
- 
+import com.nexio.api.ms.domain.LigneCommande;
+
+
 /**
- * Spring Data  repository for the Produit entity.
+ * Spring Data  repository for the CarnetCommande entity.
  */
 @Repository
-public interface ProduitRepository extends JpaRepository<Produit, Long> {
+public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Long> {
 
 	/**
 	 * 
@@ -39,46 +39,39 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 		* However, we can overload them as we wish (if needed)
 		* Query, Query Native
 	 */
-		
+	
 /**
  * Queries (Methods) relating to the main Business Rules (search)
  */
-	
-public Page<Produit> findByMarque(String marque, Pageable pageable);
-public Page<Produit> findByModele(String modele, Pageable pageable);	
-
-
-public List<Produit> findByMarqueLike(String marque);
-
-public List<Produit> findByModeleLike(String modele);
-
-public List<Produit> findByCaracteristiquesLike( String caracteristique);
-
-
+public Page<LigneCommande> findByEtat(Long etat, Pageable pageable);
+public Page<LigneCommande> findByPrixUnitaire(BigDecimal prixUnitaire, Pageable pageable);
+ 
  
 /**
  * Finders
  */
 
-public List<Produit>  findByCategorieId(Long categorieId);
+public List<LigneCommande>  findByPrixTotalLessThan(BigDecimal prixTotal);
 
-public List<Produit>  findByQuantiteGreaterThan(Long qte);
-public List<Produit>  findByQuantiteLessThan(Long qte);
-
-public List<Produit> findByPrixUnitaireGreaterThan(BigDecimal puProduit);
-public List<Produit> findByPrixUnitaireLessThan(BigDecimal puProduit);
-
+public List<LigneCommande>  findByPrixTotalGreaterThan(BigDecimal prixTotal);
 
 /**
  * Just an example in case we want to appeal
   * to the query (which is not recommended for Spring Data performace)
  */
+@Query(
+		  " SELECT  c FROM LigneCommande c "
+		    + " WHERE  c.etat = ?1 "
+		    + " AND  c.prixTotal > ?2 " 
+)	
+public List<LigneCommande> findByEtatAndPrixTotSup(Long etat, BigDecimal prixTotal);
 
-@Query("SELECT p FROM Produit p WHERE p.prixUnitaire > :maxprice")
-public List<Produit> findProduitExpensive(@Param("maxprice") BigDecimal prixMax);
- 
 
-
+@Query(
+		  " SELECT  c FROM LigneCommande c "
+		    + " WHERE  c.commandeId = ?1 "
+)	
+public List<LigneCommande> findByCommandeId(Long commandeId);
 
 
 

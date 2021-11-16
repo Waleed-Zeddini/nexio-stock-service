@@ -1,4 +1,4 @@
-package com.nexio.api.ms.domain;
+package com.nexio.api.ms.dto;
 /*
  * Copyright 2021 Zeddini, as indicated by the @author tags.
  *
@@ -12,11 +12,12 @@ package com.nexio.api.ms.domain;
  * @since   2021-11-05 
  */
 
-
-
-
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
+
+import com.nexio.api.ms.domain.Client;
+import com.nexio.api.ms.domain.Commande;
+import com.nexio.api.ms.domain.LigneCommande;
 
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
@@ -29,29 +30,19 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ApiModel(value="Produit",description="Produit est un bean non persistant, il sert à être consommé à partir du deuxième Microsercice (https://nexio-stock-service.herokuapp.com/api/produits/)")
-public class Produit implements Serializable {
+@ApiModel(value="DTO Order",description="Order est un DTO non persistant, il inclut les données du Client, de la Commande et des lignes commande de cette dernière")
+public class OrderDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     
-    private Long id;
-
+    private Client client;
     
-    private String code;
+    private Commande commande;
 
-    private String marque;
+    private List<LigneCommande> ligneCommande;
 
-    private String modele;
-
-    private String caracteristiques;
-
-    private BigDecimal prixUnitaire;
-
-    private Long quantite;
-
- 
-
-
-   
+    /**
+     * a DTO, for easy binding with Front-end ( In my case, I use Angular )
+     */    
 }

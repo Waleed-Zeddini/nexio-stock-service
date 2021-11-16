@@ -27,8 +27,9 @@ public final class Constants {
     //	 URL Rest to invocate
     //    public static final String URL_MS_PRODUIT = "http://order-service/order/";
 
-    public static final String  PRODUIT_API_URL = "https://esitsi-pfa-api.herokuapp.com/api/produits/";
-    
+    public static final String  PRODUIT_API_URL_BASE = "https://nexio-stock-service.herokuapp.com";
+    public static final String  PRODUIT_API_URL = "https://nexio-stock-service.herokuapp.com/api/produits/";
+
     // Regex for acceptable logins
     public static final String LOGIN_REGEX = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$";
 
