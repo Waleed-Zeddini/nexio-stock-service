@@ -77,7 +77,7 @@ keycloak:
 #  auth-server-url: ${UAA_URI:http://192.168.2.177:8080/auth/}
   auth-server-url: http://key-cloak.ddns.net:8080/auth/
   realm: nexio-api-rest-space
-  resource : order
+  resource : stock
   public-client : false
   bearer-only : true
   credentials : 
