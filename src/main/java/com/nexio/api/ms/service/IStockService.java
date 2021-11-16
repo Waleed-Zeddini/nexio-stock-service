@@ -7,17 +7,17 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.nexio.api.ms.dto.OrderDTO;
+import com.nexio.api.ms.domain.Produit;
 
-public interface IOrderService {
+public interface IStockService {
 
-	OrderDTO save(OrderDTO commande);
+	Produit save(Produit produit);
 
-	Page<OrderDTO> findAll(Pageable pageable);
+	Page<Produit> findAll(Pageable pageable);
 	
-	List<OrderDTO> findAll();
+	List<Produit> findAll();
 
-	Optional<OrderDTO> findOne(Long id);
+	Optional<Produit> findOne(Long id);
 
 	void delete(Long id);
 

@@ -14,26 +14,29 @@ package com.nexio.api.ms.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.nexio.api.ms.domain.Commande;
-import com.nexio.api.ms.domain.LigneCommande;
+import com.nexio.api.ms.domain.Produit;
 /**
- * Interface for managing methods linked to {@link Commande}.
+ * Interface for managing methods linked to {@link Produit}.
  */
-public interface ICommandeService {
+public interface IProduitService {
 
 	
-	Commande save(Commande produit);
+	Produit save(Produit produit);
 	 
-	Page<Commande> findAll(Pageable pageable);
+	Page<Produit> findAll(Pageable pageable);
 	
-	Optional<Commande> findOne(Long id);
+	List<Produit> findAll();
+	
+	Optional<Produit> findOne(Long id);
 	
 	void delete(Long id);
-
-	List<LigneCommande> getLigneByCommandeId(Long commandeId);
+	
+	List<Produit> saveMany(List<Produit> produit);
 
    
 }

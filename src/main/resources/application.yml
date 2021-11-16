@@ -1,7 +1,7 @@
 info:
     app:
-        desc: Order Service API
-        name: order-service
+        desc: Stock Service API
+        name: stock-service
         contact:
            name: Walid ZEDDINI
            email: walid.zeddini@gmail.com
@@ -12,9 +12,9 @@ info:
             
 spring:
   application:
-    name: order-service
+    name: stock-service
   zipkin:
-    base-url: http://zipkin-server.ddns.net:9411/zipkin/
+    base-url: http://localhost:9411/
 # Security configuration
 #  security:
 #    user:
@@ -24,17 +24,14 @@ spring:
   datasource: 
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      pool-name: ':::::::::::: Hikari DS NEXIO ORDER-MS POOL ::::::::::::'
+      pool-name: ':::::::::::: Hikari DS NEXIO INVENTARY-MS POOL ::::::::::::'
       connection-timeout: 60000
       maximum-pool-size: 30
     driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/ORDER_MS_DB
-#    username: zedgres
-#    password: zedgres
-    url: jdbc:postgresql://ec2-52-54-237-144.compute-1.amazonaws.com:5432/df8gpqtl7fqqdj
-    username: qmqirgynylbcpo
-    password: 38fc0b6abad6b6b1394dadf3f883e56ef44b296ef54b0c7d67e640309a563dee
-
+    url: jdbc:postgresql://localhost:5435/INVENTARY_MS_DB
+    username: zedgres
+    password: zedgres
+  # JPA properties spring.jpa.hibernate.ddl-auto=update
   jpa:
     hibernate:
       ddl-auto: update # When you launch the application for the first time - switch "none" at "create"
@@ -55,42 +52,42 @@ logging:
     root: INFO
     org.springframework.web: ERROR
     org.hibernate: ERROR
-
-# Eureka Client setting    
+   
+#  Server configuration
+server:
+  port: 9191 
 eureka:
   instance:
     hostname: localhost
     serviceUrl:
       defaultZone : http://${eureka.instance.hostname}:8761/eureka/  
-      
 # CF UAA setting  
 #uaa:
 #  url: ${UAA_URI:http://localhost:8080/uaa}
 #  # Client ID on whose behalf the access_token will be verified by Resource Server
 #  clientId: uaa-ui-client
 #  clientSecret: secret
-     
-# Keycloak setting       
+# Keycloak setting
+
 keycloak:
 #  auth-server-url: ${UAA_URI:http://192.168.2.177:8080/auth/}
   auth-server-url: http://key-cloak.ddns.net:8080/auth/
   realm: nexio-api-rest-space
-  resource : order
+  resource : stock
   public-client : false
   bearer-only : true
   credentials : 
     secret : 6de31c9b-3acb-4ae0-a3d5-639bc72c5d29
     use-resource-role-mappings : true  
-
-# Open Feign Client setting
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 10000
-        loggerLevel: basic
-
-#  Server configuration
-server:
-  port: 9090 
+    
+#keycloak:
+#  enabled: true
+#  auth-server-url: http://key-cloak.ddns.net:8080/auth/
+#  credentials:
+#    secret: 14da6f9e-261f-489a-9bf0-1441e4a9ddc4
+#  realm: baeldung-soap-services
+#  bearer-only: true
+#  use-resource-role-mappings: 'true'
+##  ssl-required: external
+#  resource: baeldung-soap-services    
+    
