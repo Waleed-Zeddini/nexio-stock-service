@@ -54,7 +54,7 @@ logging:
      file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
   level:
     root: INFO
-    org.springframework.web: DEBUG
+    org.springframework.web: ERROR
     org.hibernate: ERROR
 
 # Eureka Client setting    
