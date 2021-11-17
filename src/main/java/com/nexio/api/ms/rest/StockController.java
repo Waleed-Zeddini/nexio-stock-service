@@ -18,6 +18,7 @@ import com.nexio.api.ms.service.IStockService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
-
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -50,7 +50,7 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:4200")
-@Api(value="The main Microservice",tags="Microservice - Stock")
+@Api(value="Microservice - Stock",tags="Microservice - Stock",description="The main Microservice")
 public class StockController {
 
     private final Logger log = LoggerFactory.getLogger(StockController.class);
@@ -127,7 +127,13 @@ public class StockController {
     
     @GetMapping("/stoks{id}")
     @ApiOperation(value = "Get Produit from the Stock by id")
-    public ResponseEntity<Produit> getStock(@PathVariable Long id) {
+    public ResponseEntity<Produit> getStock(
+    		@ApiParam(
+		    	    name =  "id",
+		    	    value = "id",
+		    	    example = "1",
+		    	    required = true)    		
+    		@PathVariable Long id) {
         log.debug("REST request to get Produit in the Stock : {}", id);
         Optional<Produit> stok = stokService.findOne(id);
         return ResponseEntity.ok().body(stok.get());
@@ -143,9 +149,236 @@ public class StockController {
 
     @ApiOperation(value = "Delete Produit from the Stock by id")
     @DeleteMapping("/stoks{id}")
-    public ResponseEntity<Void> deleteStock(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteStock(
+    		@ApiParam(
+		    	    name =  "id",
+		    	    value = "id",
+		    	    example = "1",
+		    	    required = true)
+    		
+    		@PathVariable Long id) {
         log.debug("REST request to delete Produit from the Stock by id : {}", id);
         stokService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    
+    /**
+     * {@code GET  /stoks} : get all the stoks by Prix  isGreaterThan.
+     *
+	 * @param prixTotal
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of stoks in body.
+     */ 
+    @GetMapping("/stoks/all-produits/prix-greater-than")
+    @ApiOperation(value = "Get all the produits that price is greater than the price entred")
+	public List<Produit> getProduitsByByPrixGreaterThan(
+		    @ApiParam(
+		    	    name =  "puProduit",
+		    	    value = "Prix Unitaire",
+		    	    example = "100",
+		    	    required = true)
+			BigDecimal puProduit) {
+    	
+    log.debug("REST request to get all the produits that its price greater than the price entred");
+    
+  	return stokService.getByPrixUnitaireGreaterThan(puProduit);
+	
+	}
+    
+    /**
+     * {@code GET  /stoks} : get all the produits by Prixless.
+     *
+	 * @param prixTotal
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
+     */ 
+    @GetMapping("/stoks/all-produits/prix-less-than")
+    @ApiOperation(value = "Get all the produits that price is less than the price entred")
+	public List<Produit> getProduitsByPrixTotalLess(
+		    @ApiParam(
+		    	    name =  "puProduit",
+		    	    value = "Prix Unitaire",
+		    	    example = "100",
+		    	    required = true)
+			BigDecimal puProduit) {
+    	
+    log.debug("REST request to get all the produits that its price less than the price entred");
+    
+  	return stokService.getByPrixUnitaireLessThan(puProduit);
+	
+	}
+  
+    /**
+     * {@code GET  /produits} : get all the produits by Prix is between Min and Max.
+     *
+	 * @param prixMin
+	 * @param prixMax
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
+     */ 
+    @GetMapping("/stoks/all-produits/prix-between")
+    @ApiOperation(value = "Get all the produits that price is between Min and Max")
+	public List<Produit> getProduitsByByPrixGreaterThan(
+			@ApiParam(
+		    	    name =  "prixMin",
+		    	    value = "Prix Min",
+		    	    example = "10",
+		    	    required = true)
+			BigDecimal prixMin, 
+			
+			@ApiParam(
+		    	    name =  "prixMax",
+		    	    value = "Prix Max",
+		    	    type= "number",
+		    	    example = "100000",
+		    	    required = true)
+			BigDecimal prixMax) {
+    	
+    log.debug("REST request to get all the produits that its price is between Min and Max");
+    
+  	return stokService.getAllProduitsByPrixTBetween(prixMin, prixMax);
+	
+	}
+
+    
+    /**
+     * {@code GET  /produits} : get all the produits that marque like entred value.
+     *
+	 * @param marque
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
+     */ 
+    @GetMapping("/stoks/all-produits/marque-like")
+    @ApiOperation(value = "Get all the produits that marque like ebtred value")
+	public List<Produit> getProduitsByMarqueLike(
+			@ApiParam(
+		    	    name =  "marque",
+		    	    value = "marque",
+		    	    example = "HP or Dell",
+		    	    required = true)
+			String marque) {
+    	
+    log.debug("REST request to get all the produits that marque like entred value");
+    
+  	return stokService.getByMarqueLike(marque);
+	
+	}
+    
+    /**
+     * {@code GET  /produits} : get all the that modele like entred value.
+     *
+	 * @param modele
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
+     */ 
+    @GetMapping("/stoks/all-produits/modele-like")
+    @ApiOperation(value = "Get all the produits that modele like entred value")
+	public List<Produit> getProduitsByModeleLike(
+			@ApiParam(
+		    	    name =  "modele",
+		    	    value = "modele",
+		    	    example = "ProDesk or Latitude",
+		    	    required = true)
+			String modele) {
+    	
+    log.debug("REST request to get all the produits that  modele like entred value");
+    
+  	return stokService.getByModeleLike(modele);
+	
+	}
+    
+    /**
+     * {@code GET  /produits} : get all the that caracteristique like entred value.
+     *
+	 * @param caracteristique
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
+     */ 
+    @GetMapping("/stoks/all-produits/caracteristics-like")
+    @ApiOperation(value = "Get all the produits that caracteristiques like entred value")
+	public List<Produit> getProduitsByCaracteristicLike(
+			@ApiParam(
+		    	    name =  "caracteristiques",
+		    	    value = "caracteristiques",
+		    	    example = "I9 or 32 GO RAM or 5 Tera HD",
+		    	    required = true)
+			String caracteristiques) {
+    	
+    log.debug("REST request to get all the produits that  caracteristiques like entred value");
+    
+  	return stokService.getByCaracteristiquesLike(caracteristiques);
+	
+	}
+    
+    
+    /**
+     * {@code GET  /stoks} : get all the stoks by Quantite GreaterThan.
+     *
+	 * @param prixTotal
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of stoks in body.
+     */ 
+    @GetMapping("/stoks/all-produits/qte-greater-than")
+    @ApiOperation(value = "Get all the produits that Quantite is greater than the Quantite entred")
+	public List<Produit> getProduitsByByQuantiteGreaterThan(
+		    @ApiParam(
+		    	    name =  "qte",
+		    	    value = "qte",
+		    	    example = "100",
+		    	    required = true)
+			Long qte) {
+    	
+    log.debug("REST request to get all the produits that its price greater than the price entred");
+    
+  	return stokService.getByQuantiteGreaterThan(qte);
+	
+	}
+    
+    /**
+     * {@code GET  /stoks} : get all the produits by qte less.
+     *
+	 * @param prixTotal
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
+     */ 
+    @GetMapping("/stoks/all-produits/qte-less-than")
+    @ApiOperation(value = "Get all the produits that qte is less than the qte entred")
+	public List<Produit> getProduitsByQteLess(
+		    @ApiParam(
+		    	    name =  "qte",
+		    	    value = "qte",
+		    	    example = "100",
+		    	    required = true)
+			Long qte) {
+    	
+    log.debug("REST request to get all the produits that its price less than the qte entred");
+    
+  	return stokService.getByQuantiteLessThan(qte);
+	
+	}
+  
+    /**
+     * {@code GET  /produits} : get all the produits by Prix  is between Min and Max.
+     *
+	 * @param prixMin
+	 * @param prixMax
+     * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
+     */ 
+    @GetMapping("/stoks/all-produits/qte-between")
+    @ApiOperation(value = "Get all the produits that qte is between Min and Max")
+	public List<Produit> getProduitsByQteGreaterThan(
+			@ApiParam(
+		    	    name =  "qteMin",
+		    	    value = "qte Min",
+		    	    example = "10",
+		    	    required = true)
+			BigDecimal qteMin, 
+			
+			@ApiParam(
+		    	    name =  "qteMax",
+		    	    value = "qte Max",
+		    	    type= "number",
+		    	    example = "100000",
+		    	    required = true)
+			BigDecimal qteMax) {
+    	
+    log.debug("REST request to get all the produits that its qte is between Min and Max");
+    
+  	return stokService.getAllProduitsByPQteBetween(qteMin, qteMax);
+	
+	}
+
+    
 }

@@ -35,7 +35,7 @@ spring:
     url: jdbc:postgresql://ec2-52-204-72-14.compute-1.amazonaws.com:5432/dcqdlc4ernp7r
     username: mxnpaumuogrgvm
     password: 73268c2d46d213e109f3d03a31f2df5d68bd75cf5bd8458875ce4b914521dffc    
-  # JPA properties spring.jpa.hibernate.ddl-auto=update
+
   jpa:
     hibernate:
       ddl-auto: update # When you launch the application for the first time - switch "none" at "create"
@@ -54,7 +54,7 @@ logging:
      file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
   level:
     root: INFO
-    org.springframework.web: ERROR
+    org.springframework.web: DEBUG
     org.hibernate: ERROR
 
 # Eureka Client setting    

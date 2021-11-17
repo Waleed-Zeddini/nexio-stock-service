@@ -119,13 +119,7 @@ public class StockServiceImpl implements IStockService {
    
         List<Produit> produits = produitRepository.findAll();
         
-         	
-		for (Produit produit : produits) {
-			if (produit != null) {
-				produit.setCategorie(categorieRepository.getById(produit.getCategorieId()));
-			}
-		}
-         return produits;
+        return  getProduitsByCategorieId (produits);
     }
 
    
@@ -144,6 +138,7 @@ public class StockServiceImpl implements IStockService {
         Produit produit = produitRepository.getById(id);
         
     	if (produit != null) {
+    		if(produit.getCategorieId()!=null)
 			produit.setCategorie(categorieRepository.getById(produit.getCategorieId()));
 		}
 	     
@@ -151,7 +146,12 @@ public class StockServiceImpl implements IStockService {
     }
     
   
-
+    /**
+     * Delete one by id.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
 
     public void delete(Long id) {
         log.debug("Request to delete ProduitDTO : {}", id);
@@ -159,6 +159,143 @@ public class StockServiceImpl implements IStockService {
         produitRepository.deleteById(id);
         
     }
+
+
+	/**
+	 * Set Categorie to each item of Produit List  
+	 * @param produits
+	 * @return
+	 */
+	private List<Produit>  getProduitsByCategorieId (List<Produit> produits ){
+		for (Produit produit : produits) {
+			if (produit != null) {
+				if(produit.getCategorieId()!=null)
+				produit.setCategorie(categorieRepository.getById(produit.getCategorieId()));
+			}
+		}
+         return produits;
+	}
+	
+
+    
+    /**
+     * Get all the inventarys that its marque is Like .
+     *
+     * @param marque.
+     * @return the list of entities.
+     */
+	public List<Produit> getByMarqueLike(String marque) {
+		
+		List<Produit> produits = produitRepository.findByMarqueLike("%"+marque+"%");
+		return  getProduitsByCategorieId (produits);
+         
+	}
+	
+    /**
+     * Get all the inventarys that its modele is Like .
+     *
+     * @param modele.
+     * @return the list of entities.
+     */
+	@Override
+	public List<Produit> getByModeleLike(String modele) {
+		List<Produit> produits = produitRepository.findByModeleLike("%"+modele+"%");
+		return  getProduitsByCategorieId (produits);
+	}
+
+    /**
+     * Get all the inventarys that its caracteristique is Like .
+     *
+     * @param caracteristique.
+     * @return the list of entities.
+     */
+	@Override
+	public List<Produit> getByCaracteristiquesLike(String caracteristiques) {
+		List<Produit> produits = produitRepository.findByCaracteristiquesLike("%"+caracteristiques+"%");
+		return  getProduitsByCategorieId (produits);
+	}
+
+    /**
+     * Get all the inventarys by categorie Id .
+     *
+     * @param categorieId.
+     * @return the list of entities.
+     */
+	@Override
+	public List<Produit> getByCategorieId(Long categorieId) {	
+		List<Produit> produits = produitRepository.findByCategorieId(categorieId);
+ 		for (Produit produit : produits) {
+			if (produit != null) {
+				produit.setCategorie(categorieRepository.getById(produit.getCategorieId()));
+			}
+		}
+         return produits;
+	}
+
+    /**
+     * Get all the inventarys that qte > than .
+     *
+     * @param qte.
+     * @return the list of entities.
+     */
+	@Override
+	public List<Produit> getByQuantiteGreaterThan(Long qte) {
+		List<Produit> produits = produitRepository.findByQuantiteGreaterThan(qte);
+		return  getProduitsByCategorieId (produits);
+	}
+
+	   /**
+     * Get all the inventarys that qte < than .
+     *
+     * @param qte.
+     * @return the list of entities.
+     */
+	@Override
+	public List<Produit> getByQuantiteLessThan(Long qte) {
+		List<Produit> produits = produitRepository.findByQuantiteLessThan(qte);
+		return  getProduitsByCategorieId (produits);
+	}
+
+	   /**
+     * Get all the inventarys that puProduit > than .
+     *
+     * @param puProduit.
+     * @return the list of entities.
+     */
+	@Override
+	public List<Produit> getByPrixUnitaireGreaterThan(BigDecimal puProduit) {
+		List<Produit> produits = produitRepository.findByPrixUnitaireGreaterThan(puProduit);
+		return  getProduitsByCategorieId (produits);
+	}
+
+ /**
+  * Get all the inventarys that puProduit < than .
+  *
+  * @param puProduit.
+  * @return the list of entities.
+  */
+	@Override
+	public List<Produit> getByPrixUnitaireLessThan(BigDecimal puProduit) {
+		List<Produit> produits = produitRepository.findByPrixUnitaireLessThan(puProduit);
+		return  getProduitsByCategorieId (produits);
+	}
+
+	 /**
+	  * Get all the inventarys that puProduit between min and max .
+	  *
+	  * @param puProduit.
+	  * @return the list of entities.
+	  */
+	public List<Produit> getAllProduitsByPrixTBetween(BigDecimal prixMin, BigDecimal prixMax) {
+		List<Produit> produits = produitRepository.findByPrixUnitaireLessThanAndPrixUnitaireGreaterThan(prixMax, prixMin);
+		return  getProduitsByCategorieId (produits);
+	}
+
+	@Override
+	public List<Produit> getAllProduitsByPQteBetween(BigDecimal qteMin, BigDecimal qteMax) {
+		List<Produit> produits = produitRepository.findByQuantiteLessThanAndQuantiteGreaterThan(qteMin, qteMin);
+		return  getProduitsByCategorieId (produits);
+	}
     
    
 }

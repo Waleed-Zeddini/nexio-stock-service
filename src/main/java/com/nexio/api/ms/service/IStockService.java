@@ -1,5 +1,6 @@
 package com.nexio.api.ms.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,5 +21,23 @@ public interface IStockService {
 	Optional<Produit> findOne(Long id);
 
 	void delete(Long id);
+	
+	 List<Produit> getByMarqueLike(String marque);
+
+	 List<Produit> getByModeleLike(String modele);
+
+	 List<Produit> getByCaracteristiquesLike( String caracteristique);
+
+	 List<Produit>  getByCategorieId(Long categorieId);
+
+	 List<Produit>  getByQuantiteGreaterThan(Long qte);
+	 List<Produit>  getByQuantiteLessThan(Long qte);
+
+	 List<Produit> getByPrixUnitaireGreaterThan(BigDecimal puProduit);
+	 List<Produit> getByPrixUnitaireLessThan(BigDecimal puProduit);
+
+	List<Produit> getAllProduitsByPrixTBetween(BigDecimal prixMin, BigDecimal prixMax);
+
+	List<Produit> getAllProduitsByPQteBetween(BigDecimal qteMin, BigDecimal qteMax);
 
 }

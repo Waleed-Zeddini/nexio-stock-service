@@ -54,6 +54,7 @@ public List<Produit> findByModeleLike(String modele);
 
 public List<Produit> findByCaracteristiquesLike( String caracteristique);
 
+public List<Produit> findByPrixUnitaireLessThanAndPrixUnitaireGreaterThan(BigDecimal prixMax, BigDecimal prixMin);
 
  
 /**
@@ -76,6 +77,7 @@ public List<Produit> findByPrixUnitaireLessThan(BigDecimal puProduit);
 
 @Query("SELECT p FROM Produit p WHERE p.prixUnitaire > :maxprice")
 public List<Produit> findProduitExpensive(@Param("maxprice") BigDecimal prixMax);
+public List<Produit> findByQuantiteLessThanAndQuantiteGreaterThan(BigDecimal qteMin, BigDecimal qteMin2);
  
 
 
