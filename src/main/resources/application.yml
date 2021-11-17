@@ -1,6 +1,6 @@
 info:
     app:
-        desc: Stock Service API
+        desc: API Stock Service 
         name: stock-service
         contact:
            name: Walid ZEDDINI
