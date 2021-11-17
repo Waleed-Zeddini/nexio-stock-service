@@ -68,7 +68,7 @@ public class StockController {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new Stock, or with status {@code 400 (Bad Request)} if the Stock has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/stocks")
+    @PostMapping("/stoks")
     @ApiOperation(value = "Save a new Produit in the Stock")
     public ResponseEntity<Produit> createStock(@Valid @RequestBody Produit stok) throws URISyntaxException {
         log.debug("REST request to save Stock : {}", stok);
@@ -87,7 +87,7 @@ public class StockController {
      * or with status {@code 500 (Internal Server Error)} if the stok couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/stocks")
+    @PutMapping("/stoks")
     @ApiOperation(value = "Update an existed Produit in the Stock")
     public ResponseEntity<Produit> updateStock(@Valid @RequestBody Produit stok) throws URISyntaxException {
         log.debug("REST request to update Produit in the Stock : {}", stok);
@@ -102,7 +102,7 @@ public class StockController {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of stoks in body.
      */
-    @GetMapping("/stocks")
+    @GetMapping("/stoks")
     @ApiOperation(value = "Get all Produits in the stoks - paginable")
     public ResponseEntity<List<Produit>> getAllProduits(Pageable pageable) {
         log.debug("REST request to get a page of Produits in the Stock");
@@ -111,7 +111,7 @@ public class StockController {
     }
     
     
-    @GetMapping("/stocks/all")
+    @GetMapping("/stoks/all")
     @ApiOperation(value = "Get all Produits in the Stock - list")
     public  List<Produit> getAllProduits() {
         log.debug("REST request to get all Produits in the Stock");
@@ -125,7 +125,7 @@ public class StockController {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the stok, or with status {@code 404 (Not Found)}.
      */
     
-    @GetMapping("/stocks{id}")
+    @GetMapping("/stoks{id}")
     @ApiOperation(value = "Get Produit from the Stock by id")
     public ResponseEntity<Produit> getStock(
     		@ApiParam(
@@ -148,7 +148,7 @@ public class StockController {
      */
 
     @ApiOperation(value = "Delete Produit from the Stock by id")
-    @DeleteMapping("/stocks{id}")
+    @DeleteMapping("/stoks{id}")
     public ResponseEntity<Void> deleteStock(
     		@ApiParam(
 		    	    name =  "id",
@@ -168,7 +168,7 @@ public class StockController {
 	 * @param prixTotal
      * @return the List of Stoks with status {@code 200 (OK)} and the list of stoks in body.
      */ 
-    @GetMapping("/stocks/all-produits/prix-greater-than")
+    @GetMapping("/stoks/all-produits/prix-greater-than")
     @ApiOperation(value = "Get all the produits that price is greater than the price entred")
 	public List<Produit> getProduitsByByPrixGreaterThan(
 		    @ApiParam(
@@ -190,7 +190,7 @@ public class StockController {
 	 * @param prixTotal
      * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
      */ 
-    @GetMapping("/stocks/all-produits/prix-less-than")
+    @GetMapping("/stoks/all-produits/prix-less-than")
     @ApiOperation(value = "Get all the produits that price is less than the price entred")
 	public List<Produit> getProduitsByPrixTotalLess(
 		    @ApiParam(
@@ -213,7 +213,7 @@ public class StockController {
 	 * @param prixMax
      * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
      */ 
-    @GetMapping("/stocks/all-produits/prix-between")
+    @GetMapping("/stoks/all-produits/prix-between")
     @ApiOperation(value = "Get all the produits that price is between Min and Max")
 	public List<Produit> getProduitsByByPrixGreaterThan(
 			@ApiParam(
@@ -244,7 +244,7 @@ public class StockController {
 	 * @param marque
      * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
      */ 
-    @GetMapping("/stocks/all-produits/marque-like")
+    @GetMapping("/stoks/all-produits/marque-like")
     @ApiOperation(value = "Get all the produits that marque like ebtred value")
 	public List<Produit> getProduitsByMarqueLike(
 			@ApiParam(
@@ -266,7 +266,7 @@ public class StockController {
 	 * @param modele
      * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
      */ 
-    @GetMapping("/stocks/all-produits/modele-like")
+    @GetMapping("/stoks/all-produits/modele-like")
     @ApiOperation(value = "Get all the produits that modele like entred value")
 	public List<Produit> getProduitsByModeleLike(
 			@ApiParam(
@@ -288,7 +288,7 @@ public class StockController {
 	 * @param caracteristique
      * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
      */ 
-    @GetMapping("/stocks/all-produits/caracteristics-like")
+    @GetMapping("/stoks/all-produits/caracteristics-like")
     @ApiOperation(value = "Get all the produits that caracteristiques like entred value")
 	public List<Produit> getProduitsByCaracteristicLike(
 			@ApiParam(
@@ -311,7 +311,7 @@ public class StockController {
 	 * @param prixTotal
      * @return the List of Stoks with status {@code 200 (OK)} and the list of stoks in body.
      */ 
-    @GetMapping("/stocks/all-produits/qte-greater-than")
+    @GetMapping("/stoks/all-produits/qte-greater-than")
     @ApiOperation(value = "Get all the produits that Quantite is greater than the Quantite entred")
 	public List<Produit> getProduitsByByQuantiteGreaterThan(
 		    @ApiParam(
@@ -333,7 +333,7 @@ public class StockController {
 	 * @param prixTotal
      * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
      */ 
-    @GetMapping("/stocks/all-produits/qte-less-than")
+    @GetMapping("/stoks/all-produits/qte-less-than")
     @ApiOperation(value = "Get all the produits that qte is less than the qte entred")
 	public List<Produit> getProduitsByQteLess(
 		    @ApiParam(
@@ -356,7 +356,7 @@ public class StockController {
 	 * @param prixMax
      * @return the List of Stoks with status {@code 200 (OK)} and the list of produits in body.
      */ 
-    @GetMapping("/stocks/all-produits/qte-between")
+    @GetMapping("/stoks/all-produits/qte-between")
     @ApiOperation(value = "Get all the produits that qte is between Min and Max")
 	public List<Produit> getProduitsByQteGreaterThan(
 			@ApiParam(
