@@ -173,6 +173,7 @@ public class StockServiceImpl implements IStockService {
     public void delete(Long id) {
         log.debug("Request to delete ProduitDTO : {}", id);
       
+        if(produitRepository.existsById(id));
         produitRepository.deleteById(id);
         
     }
