@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +65,21 @@ public class ProduitServiceImpl implements IProduitService {
     @Transactional(readOnly = true)
     public Page<Produit> findAll(Pageable pageable) {
         log.debug("Request to get all Produits");
-        return produitRepository.findAll(pageable);
+        
+        Page<Produit> produits = produitRepository.findAll(pageable);
+        
+     	
+    	for (Produit produit : produits) {
+    		
+    		if (produit != null) {
+    			if(produit.getCategorieId()!=null)
+    			produit.setCategorie(categorieRepository.getById(produit.getCategorieId()));
+	        }
+		}
+    
+    	Page<Produit> pages = new PageImpl<Produit>(produits.getContent(), pageable, Integer.valueOf(produits.getSize()).longValue());
+    
+    	return pages;
     }
 
 
@@ -94,8 +109,11 @@ public class ProduitServiceImpl implements IProduitService {
 	public List<Produit> saveMany(List<Produit> produitList) {
 		List<Produit> result = new ArrayList<Produit>();
 		for (Produit produit : produitList) {
+			if(produit.getCategorieId()!=null)
+			{
 			produit = save(produit);
 			result.add(produit);
+			}
 		}
 		return result;
 	}
@@ -107,6 +125,7 @@ public class ProduitServiceImpl implements IProduitService {
        	
 			for (Produit produit : produits) {
 				if (produit != null) {
+					if(produit.getCategorieId()!=null)
 					produit.setCategorie(categorieRepository.getById(produit.getCategorieId()));
 				}
 			}

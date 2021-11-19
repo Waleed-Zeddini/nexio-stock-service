@@ -58,18 +58,18 @@ public class StockServiceImpl implements IStockService {
 	}
 
 	 /**
-     * Create an inventary.
+     * Create an produit.
      *
-     * @param inventary the entity to save.
+     * @param produit the entity to save.
      * @return the persisted entity.
      */
 	
  
 	 
 	    /**
-	     * Save a inventary.
+	     * Save a produit.
 	     *
-	     * @param inventary the entity to save.
+	     * @param produit the entity to save.
 	     * @return the persisted entity.
 	     */
 			 
@@ -84,16 +84,33 @@ public class StockServiceImpl implements IStockService {
 	        
 	        return produit;
 	    }
+	    /**
+	     * Save many produit.
+	     *
+	     * @param List produit  to save.
+	     * @return the persisted entities.
+	     */    
+		public List<Produit> saveMany(List<Produit> produitList) {
+			List<Produit> result = new ArrayList<Produit>();
+			for (Produit produit : produitList) {
+				if(produit.getCategorieId()!=null)
+				{
+				produit = save(produit);
+				result.add(produit);
+				}
+			}
+			return result;
+		}
 
     /**
-     * Get all the inventarys.
+     * Get all the produits.
      *
      * @param pageable the pagination information.
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public Page<Produit> findAll(Pageable pageable) {
-        log.debug("Request to get all Inventarys");
+        log.debug("Request to get all Stocks");
    
         Page<Produit> produits = produitRepository.findAll(pageable);
         
@@ -107,15 +124,15 @@ public class StockServiceImpl implements IStockService {
 			}
         	
       
-        	Page<Produit> pageInventarys = new PageImpl<Produit>(produits.getContent(), pageable, Integer.valueOf(produits.getSize()).longValue());
+        	Page<Produit> pages = new PageImpl<Produit>(produits.getContent(), pageable, Integer.valueOf(produits.getSize()).longValue());
         
-        return pageInventarys;
+        return pages;
     }
 
 
     @Transactional(readOnly = true)
     public List<Produit> findAll() {
-        log.debug("Request to get all Inventarys");
+        log.debug("Request to get all Stocks");
    
         List<Produit> produits = produitRepository.findAll();
         
@@ -125,7 +142,7 @@ public class StockServiceImpl implements IStockService {
    
 
     /**
-     * Get one inventary by id.
+     * Get one produit by id.
      *
      * @param id the id of the entity.
      * @return the entity.
@@ -161,6 +178,23 @@ public class StockServiceImpl implements IStockService {
     }
 
 
+    /**
+     * Delete one by id.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+
+	public void deleteMany(List<Produit> produits) {
+		log.debug("Request to delete List of produits : {}");
+		for (Produit produit : produits) {
+			if (produit != null) {
+				if (produit.getId() != null)
+					produitRepository.deleteById(produit.getId());
+			}
+		}
+        
+    }
 	/**
 	 * Set Categorie to each item of Produit List  
 	 * @param produits
@@ -179,7 +213,7 @@ public class StockServiceImpl implements IStockService {
 
     
     /**
-     * Get all the inventarys that its marque is Like .
+     * Get all the produits that its marque is Like .
      *
      * @param marque.
      * @return the list of entities.
@@ -192,7 +226,7 @@ public class StockServiceImpl implements IStockService {
 	}
 	
     /**
-     * Get all the inventarys that its modele is Like .
+     * Get all the produits that its modele is Like .
      *
      * @param modele.
      * @return the list of entities.
@@ -204,7 +238,7 @@ public class StockServiceImpl implements IStockService {
 	}
 
     /**
-     * Get all the inventarys that its caracteristique is Like .
+     * Get all the produits that its caracteristique is Like .
      *
      * @param caracteristique.
      * @return the list of entities.
@@ -216,7 +250,7 @@ public class StockServiceImpl implements IStockService {
 	}
 
     /**
-     * Get all the inventarys by categorie Id .
+     * Get all the produits by categorie Id .
      *
      * @param categorieId.
      * @return the list of entities.
@@ -233,7 +267,7 @@ public class StockServiceImpl implements IStockService {
 	}
 
     /**
-     * Get all the inventarys that qte > than .
+     * Get all the produits that qte > than .
      *
      * @param qte.
      * @return the list of entities.
@@ -245,7 +279,7 @@ public class StockServiceImpl implements IStockService {
 	}
 
 	   /**
-     * Get all the inventarys that qte < than .
+     * Get all the produits that qte < than .
      *
      * @param qte.
      * @return the list of entities.
@@ -257,7 +291,7 @@ public class StockServiceImpl implements IStockService {
 	}
 
 	   /**
-     * Get all the inventarys that puProduit > than .
+     * Get all the produits that puProduit > than .
      *
      * @param puProduit.
      * @return the list of entities.
@@ -269,7 +303,7 @@ public class StockServiceImpl implements IStockService {
 	}
 
  /**
-  * Get all the inventarys that puProduit < than .
+  * Get all the produits that puProduit < than .
   *
   * @param puProduit.
   * @return the list of entities.
@@ -281,7 +315,7 @@ public class StockServiceImpl implements IStockService {
 	}
 
 	 /**
-	  * Get all the inventarys that puProduit between min and max .
+	  * Get all the produits that puProduit between min and max .
 	  *
 	  * @param puProduit.
 	  * @return the list of entities.
@@ -291,10 +325,25 @@ public class StockServiceImpl implements IStockService {
 		return  getProduitsByCategorieId (produits);
 	}
 
-	@Override
+	 /**
+	  * Get all the produits that puProduit between min and max .
+	  *
+	  * @param qteMin.qteMax
+	  * @return the list of entities.
+	  */
 	public List<Produit> getAllProduitsByPQteBetween(BigDecimal qteMin, BigDecimal qteMax) {
 		List<Produit> produits = produitRepository.findByQuantiteLessThanAndQuantiteGreaterThan(qteMin, qteMin);
 		return  getProduitsByCategorieId (produits);
+	}
+
+	 /**
+	  * Get produit by PK.
+	  *
+	  * @param id
+	  * @return Produit.
+	  */
+	public Produit getProditById(Long id) {
+		return (produitRepository.findById(id)).get();
 	}
     
    

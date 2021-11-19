@@ -100,6 +100,7 @@ public class CategorieServiceImpl implements ICategorieService {
 		List<Produit> produitList = getByCategorieId(id);
 
 		for (Produit produit : produitList) {
+			if(produit.getId()!=null)
 			produitRepository.deleteById(produit.getId());
 		}
 

@@ -13,14 +13,20 @@ import com.nexio.api.ms.domain.Produit;
 public interface IStockService {
 
 	Produit save(Produit produit);
+	
+	List<Produit> saveMany(List<Produit> produitList);
 
 	Page<Produit> findAll(Pageable pageable);
 	
 	List<Produit> findAll();
 
 	Optional<Produit> findOne(Long id);
+	
+	Produit getProditById(Long id);
 
 	void delete(Long id);
+	
+	void deleteMany(List<Produit> produits) ;
 	
 	 List<Produit> getByMarqueLike(String marque);
 
