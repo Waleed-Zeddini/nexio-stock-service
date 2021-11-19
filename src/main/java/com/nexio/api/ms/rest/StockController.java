@@ -77,6 +77,22 @@ public class StockController {
         return ResponseEntity.created(new URI("/api/stoks" + result.getId()))
             .body(result);
     }
+    /**
+     * {@code POST  /stoks/save/many} : Create many Produit.
+     *
+     * @param StockDTO the Stock to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new Stock, or with status {@code 400 (Bad Request)} if the Stock has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/stoks/save/many")
+    @ApiOperation(value = "Save a list of Produits in the Stock")
+    public List<Produit> createManyProduit( @RequestBody List<Produit> produit) throws URISyntaxException {
+        log.debug("REST request to save many Produits : {}");
+ 
+        produit = stokService.saveMany(produit);
+        
+        return produit;
+        }
 
     /**
      * {@code PUT  /stoks} : Updates an existing Produit.
@@ -97,7 +113,7 @@ public class StockController {
     }
 
     /**
-     * {@code GET  /stoks} : get all Produits in the stok.
+     * {@code GET  /stoks} : get all Produits in the stok pageable.
      *
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of stoks in body.
@@ -109,7 +125,11 @@ public class StockController {
         Page<Produit> page = stokService.findAll(pageable);
         return ResponseEntity.ok().body(page.getContent());
     }
-    
+    /**
+     * {@code GET  /stoks} : get all Produits in the stok - list.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of stoks in body.
+     */
     
     @GetMapping("/stoks/all")
     @ApiOperation(value = "Get all Produits in the Stock - list")
@@ -159,6 +179,22 @@ public class StockController {
     		@PathVariable Long id) {
         log.debug("REST request to delete Produit from the Stock by id : {}", id);
         stokService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    
+    /**
+     * {@code DELETE  /stoks:id} : Produit from the Stock by "id".
+     *
+     * @param id the id of the stok to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+
+    @ApiOperation(value = "Delete Many Produits from the Stock by giving the list produits")
+    @DeleteMapping("/stoks/many")
+    public ResponseEntity<Void> deleteManyStock(@RequestBody List<Produit> produits){
+        log.debug("REST request to delete Many Produits from from the Stock by list produits");
+        stokService.deleteMany(produits);
         return ResponseEntity.noContent().build();
     }
     
