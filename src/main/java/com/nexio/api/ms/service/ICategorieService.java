@@ -37,6 +37,10 @@ public interface ICategorieService {
 
 	List<Categorie> findAll();
 
+	List<Categorie> saveMany(List<Categorie> categories);
+
+	void deleteMany(List<Categorie> categorieList);
+
 
    
 }

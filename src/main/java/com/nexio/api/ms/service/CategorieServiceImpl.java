@@ -116,4 +116,30 @@ public class CategorieServiceImpl implements ICategorieService {
 	public List<Categorie> findAll() {
 		return categorieRepository.findAll();
 	}
+
+	@Override
+	public List<Categorie> saveMany(List<Categorie> categorieList) {
+		List<Categorie> result = new ArrayList<Categorie>();
+		for (Categorie categorie : categorieList) {
+		 
+			categorie = save(categorie);
+			result.add(categorie);
+			 
+		}
+		return result;
+		
+	}
+	/**
+	 * deleteMany
+	 */
+ 	@Override
+	public void deleteMany(List<Categorie> categorieList) {
+ 		for (Categorie categorie : categorieList) {
+ 			if(categorie.getId()!=null)
+ 			this.delete(categorie.getId());
+			 
+		}
+ 	}
+	
+	
 }

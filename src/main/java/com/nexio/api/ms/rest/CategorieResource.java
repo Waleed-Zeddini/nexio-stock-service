@@ -14,9 +14,11 @@ package com.nexio.api.ms.rest;
  */
 
 import com.nexio.api.ms.domain.Categorie;
+import com.nexio.api.ms.domain.Produit;
 import com.nexio.api.ms.service.ICategorieService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
 
 import org.slf4j.Logger;
@@ -78,7 +80,21 @@ public class CategorieResource {
         return ResponseEntity.created(new URI("/api/categories/" + result.getId()))
                 .body(result);
     }
-
+    /**
+     * {@code POST  /categories} : Create many categorie.
+     *
+     * @param list of categorie to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new categorie, or with status {@code 400 (Bad Request)} if the categorie has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/categories/save/many")
+    public List<Categorie> createManyPCategorie( @RequestBody List<Categorie> categories) throws URISyntaxException {
+        log.debug("REST request to save many Categorie : {}");
+ 
+        categories = categorieService.saveMany(categories);
+        
+        return categories;
+        }
     /**
      * {@code PUT  /categories} : Updates an existing categorie.
      *
@@ -98,7 +114,7 @@ public class CategorieResource {
     }
 
     /**
-     * {@code GET  /categories} : get all the categories.
+     * {@code GET  /categories} : get all the categories - Pageable.
      *
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of categories in body.
@@ -108,6 +124,13 @@ public class CategorieResource {
         log.debug("REST request to get a page of Categories");
         Page<Categorie> page = categorieService.findAll(pageable);
         return ResponseEntity.ok().body(page.getContent());
+    }
+    
+    @GetMapping("/categories/all")
+    @ApiOperation(value = "Get all Categories in the Stock - list")
+    public  List<Categorie> getAllCategories() {
+        log.debug("REST request to get all Produits in the Stock");
+        return categorieService.findAll();
     }
 
     /**
@@ -133,6 +156,19 @@ public class CategorieResource {
     public ResponseEntity<Void> deleteCategorie(@PathVariable Long id) {
         log.debug("REST request to delete Categorie : {}", id);
         categorieService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    /**
+     * {@code DELETE  /categories/:id} : delete the "id" categorie.
+     *
+     * @param id the id of the categorie to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/categories/many")
+    public ResponseEntity<Void> deleteManyCategorie( @RequestBody List<Categorie> categorieList) {
+        log.debug("REST request to delete many Categorie : {}");
+        categorieService.deleteMany(categorieList);
         return ResponseEntity.noContent().build();
     }
 }
