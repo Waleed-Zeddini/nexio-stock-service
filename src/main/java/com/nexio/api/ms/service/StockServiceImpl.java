@@ -101,7 +101,7 @@ public class StockServiceImpl implements IStockService {
         	for (Produit produit : produits) {
         		
         		if (produit != null) {
-        			
+        			if(produit.getCategorieId()!=null)
         			produit.setCategorie(categorieRepository.getById(produit.getCategorieId()));
     	        }
 			}
